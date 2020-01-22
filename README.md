@@ -9,3 +9,9 @@ Feel free to modify the *linode-cli* script if you have different needs.
 
 On the first time you run this command, it will ask you to [create a token](https://cloud.linode.com/profile/tokens).
 Create your token and paste it on the command line. You will only have to do this once.
+
+After installation, you can update the container and the *linode-cli* to the latest version with:
+
+    linode-cli update
+
+
