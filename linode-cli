@@ -6,7 +6,9 @@ if [ ! -f "$LND_CNF" ]; then
   touch "$LND_CNF"
 fi
 
-if [ "$@" == "version" ]; then
+if [ "$@" == "update" ]; then
+  docker pull "$DOC_IMG"
+elif [ "$@" == "version" ]; then
   docker run --rm -ti --entrypoint=/bin/cat "$DOC_IMG" /version.txt
 else
   docker run --rm -ti -v "$LND_CNF":/root/.linode-cli -v "$SSH_DIR":/root/.ssh "$DOC_IMG" $@
