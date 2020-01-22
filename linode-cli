@@ -2,6 +2,8 @@
 DOC_IMG="hidgweb/tools-linode-cli"
 LND_CNF="$HOME/.linode-cli"
 SSH_DIR="$HOME/.ssh"
+UPDATE_URL="https://raw.githubusercontent.com/HID-GS/tools-linode-cli/master/linode-cli"
+LOCAL_URL="$0"
 if [ ! -f "$LND_CNF" ]; then
   touch "$LND_CNF"
 fi
@@ -10,6 +12,7 @@ if [ "a$@" == "a" ]; then
   docker run --rm -ti -v "$LND_CNF":/root/.linode-cli -v "$SSH_DIR":/root/.ssh "$DOC_IMG"
 elif [ "$@" == "update" ]; then
   docker pull "$DOC_IMG"
+  sudo curl -s "$UPDATE_URL" -o "$LOCAL_URL"
 elif [ "$@" == "version" ]; then
   docker run --rm -ti --entrypoint=/bin/cat "$DOC_IMG" /version.txt
 else
