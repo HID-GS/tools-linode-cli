@@ -6,5 +6,11 @@ if [ ! -f "$LND_CNF" ]; then
   touch "$LND_CNF"
 fi
 
-docker run --rm -ti -v "$LND_CNF":/root/.linode-cli -v "$SSH_DIR":/root/.ssh "$DOC_IMG" $@
+echo "params: $@"
+
+if [ "$@" == "version" ]; then
+  docker run --rm -ti --entrypoint=/bin/cat "$DOC_IMG" /version.txt
+else
+  docker run --rm -ti -v "$LND_CNF":/root/.linode-cli -v "$SSH_DIR":/root/.ssh "$DOC_IMG" $@
+fi
 
