@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+DOC_IMG="aloyr/linode-test"
+LND_CNF="$HOME/.linode-cli"
+SSH_DIR="$HOME/.ssh"
+if [ ! -f "$LND_CNF" ]; then
+  touch "$LND_CNF"
+fi
+
+docker run --rm -ti -v "$LND_CNF":/root/.linode-cli -v "$SSH_DIR":/root/.ssh "$DOC_IMG" $@
+
