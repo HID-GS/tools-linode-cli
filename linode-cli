@@ -6,8 +6,6 @@ if [ ! -f "$LND_CNF" ]; then
   touch "$LND_CNF"
 fi
 
-echo "params: $@"
-
 if [ "$@" == "version" ]; then
   docker run --rm -ti --entrypoint=/bin/cat "$DOC_IMG" /version.txt
 else
