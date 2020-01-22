@@ -8,13 +8,23 @@ if [ ! -f "$LND_CNF" ]; then
   touch "$LND_CNF"
 fi
 
-if [ "a$@" == "a" ]; then
-  docker run --rm -ti -v "$LND_CNF":/root/.linode-cli -v "$SSH_DIR":/root/.ssh "$DOC_IMG"
-elif [ "$@" == "update" ]; then
-  docker pull "$DOC_IMG"
-  sudo curl -s "$UPDATE_URL" -o "$LOCAL_URL"
-elif [ "$@" == "version" ]; then
-  docker run --rm -ti --entrypoint=/bin/cat "$DOC_IMG" /version.txt
+if [ $# -eq 1 ]; then
+  case "$1" in
+
+    "update")
+      docker pull "$DOC_IMG"
+      sudo curl -s "$UPDATE_URL" -o "$LOCAL_URL"
+      ;;
+
+    "version")
+      docker run --rm -ti --entrypoint=/bin/cat "$DOC_IMG" /version.txt
+      ;;
+
+    *)
+      docker run --rm -ti -v "$LND_CNF":/root/.linode-cli -v "$SSH_DIR":/root/.ssh "$DOC_IMG" $@
+      ;;
+  esac
 else
   docker run --rm -ti -v "$LND_CNF":/root/.linode-cli -v "$SSH_DIR":/root/.ssh "$DOC_IMG" $@
 fi
+
